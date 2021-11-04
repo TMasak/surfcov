@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-Package [source code](sufrcov) enables 
+Package [source code](sufrcov) enables s
 
 ## Installation
 
