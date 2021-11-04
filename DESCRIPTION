@@ -1,0 +1,14 @@
+Package: surfcov
+Title: Random Surfaces' Covariance Estimation beyond Separability
+Version: 0.0.0.9000
+Authors@R: 
+    person(given = "Tomas",
+           family = "Masak",
+           role = c("aut", "cre"),
+           email = "tom.masak@gmail.com")
+Description: For a random sample of random surfaces observed on a grid, 'surfcov' implements efficient covariance estimation beyond separability. Two models for the covariance are supported: the separble-plus-banded model and the R-separable model.
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.1
