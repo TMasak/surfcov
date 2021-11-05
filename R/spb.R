@@ -15,7 +15,8 @@
 #'                   defaults to \code{TRUE}
 #' @param mu matrix of size \code{K1} x \code{K2}, the mean, defaults to the
 #'           empirical mean
-#' @param predict flag whether prediction-based cross-validation should be used
+#' @param predict flag whether prediction-based cross-validation should be used,
+#'                the default is fit-based cross-validation
 #' @param maxd integer, maximum bandwidth considered by CV, defaults to
 #'             \code{min(K1,K2)/10}
 #' @param mind minimum bandwidth considered by CV, defaults to zero

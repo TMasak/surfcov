@@ -7,68 +7,139 @@
 <!-- badges: end -->
 
 The purpose of R package `surfcov` is to enable covariance estimation
-for random surfaces beyond separability.
+for random surfaces beyond separability, proposed in the papers
+[arXiv:1912.12870](https://arxiv.org/abs/1912.12870) and
+[arXiv:2007.12175](https://arxiv.org/abs/2007.12175).
 
-Let X<sub>1</sub>,…,X<sub>N</sub> be i.i.d. matrices of size
-(K<sub>1</sub> x K<sub>2</sub>) representing discrete measurements (on a
-grid) on some latent random surfaces, and C:=cov(X<sub>1</sub>) is the
-covariance, i.e. tensor of order 4. The assumption of separability
-postulates
+Let
+*X*<sub>1</sub>, …, *X*<sub>*N*</sub>
+be i.i.d. matrices of size
+*K*<sub>1</sub> × *K*<sub>2</sub>
+representing discrete measurements (on a grid) of some latent random
+surfaces on a 2D domain, and
+*C* := *c**o**v*(*X*<sub>1</sub>)
+be the covariance operator. The covariance is a tensor of size
+*K*<sub>1</sub> × *K*<sub>2</sub> × *K*<sub>1</sub> × *K*<sub>2</sub>
+, which becomes problematic to handle for
+*K*<sub>1</sub>
+and
+*K*<sub>2</sub>
+as small as 100. The assumption of separability postulates that
 
-<p style="text-align: center;">
-C
-</p>
+*C*\[*i*, *j*, *i*′, *j*′\] = *C*<sub>1</sub>\[*i*, *i*′\]*C*<sub>2</sub>\[*j*, *j*′\],
 
-*C*\[*i*, *j*\]<sub>2</sub>⟨
+which reduces statistical and computational burden, but is often
+critized as an oversimplification, since it does not allow any
+interaction between the two dimensions.
+
+This package allows for efficient estimation and subsequent manipulation
+of two alternative models, which are both strict generalizations of
+separability:
+
+1.  the separable-plus-banded model:
+    *C*\[*i*, *j*, *i*′, *j*′\] = *A*<sub>1</sub>\[*i*, *i*′\]*A*<sub>2</sub>\[*j*, *j*′\] + *B*\[*i*, *j*, *i*′, *j*′\]
+    , where
+    *B*\[*i*, *j*, *i*′, *j*′\] = 0
+    for
+    \|*i* − *i*′\| &gt; *d*
+    or
+    \|*j* − *j*′\| &gt; *d*
+    ;
+2.  the
+    *R*
+    -separable model:
+    *C*\[*i*, *j*, *i*′, *j*′\] = *A*<sub>1</sub>\[*i*, *i*′\]*B*<sub>1</sub>\[*j*, *j*′\] + … + *A*<sub>*R*</sub>\[*i*, *i*′\]*B*<sub>*R*</sub>\[*j*, *j*′\]
+    .
+
+When the data are stored in form of an array `X` of size
+*N* × *K*<sub>1</sub> × *K*<sub>2</sub>
+, it can be simply checked whether a given model can be potentially
+useful by running
+
+1.  `spb(X)` for the separable-plus-banded model; or
+2.  `scd(X)` for the
+    *R*
+    -separable model.
 
 ## Installation
 
-You can install the released version of surfcov from
-[CRAN](https://CRAN.R-project.org) with:
+You can install the development version from
+[GitHub](https://github.com/) with:
 
 ``` r
-install.packages("surfcov")
+install.packages("devtools") # only if devtools is not yet installed
+library(devtools)
+install_github("TMasak/surfcov")
 ```
 
-And the development version from [GitHub](https://github.com/) with:
+## Examples
+
+When the data are stored in form of an array `X` of size
+*N* × *K*<sub>1</sub> × *K*<sub>2</sub>
+, it can be simply checked whether a given model can be potentially
+useful by running
+
+-   `spb(X)` for the separable-plus-banded model; or
+-   `scd(X)` for the
+    *R*
+    -separable model.
+
+In particular,
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("TMasak/surfcov")
+# X <- array(runif(100*20*30),c(100,20,30))
+spb_est <- spb(X)
+spb$d
 ```
 
-## Example
-
-This is a basic example which shows you how to solve a common problem:
+Run cross-validation (CV) in order to pick a value of the bandwidth
+*d*
+, and then fits the model with the best
+*d*
+found. If a value larger than 0 is returned, it means that a
+separable-plus-banded model can fit the data better compared to a
+separable model. If we instead of fit-based CV decide to used
+prediction-based CV, it makes sense to check the gains in prediction:
 
 ``` r
-# library(surfcov)
-## basic example code
+# X <- array(runif(100*20*30),c(100,20,30))
+spb_est <- spb(X,predict=T)
+spb$d
+spb$cv
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+The same can be done with the
+*R*
+-separable model, replacing function `spb` by `scd`, see `?spb` and
+`?scd` for a more detailed description and examples. Note that by
+default, the mean is always estimated empirically, unless other
+estimator of the mean is provided.
+
+Validity of a separable-plus-model can also be checked using a bootstrap
+test, e.g. by
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+test_spb(X,d=1)
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this. You could also
-use GitHub Actions to re-render `README.Rmd` every time you push. An
-example workflow can be found here:
-<https://github.com/r-lib/actions/tree/master/examples>.
+When one of the models is fitted, a list of functions that can be useful
+to the user for subsequent manipulation of the estimated covariances is
+as follows:
 
-You can also embed plots, for example:
+-   `adi()` solves the inverse problem involving a separable-plus-banded
+    covariance
+-   `pcg()` solves the inverse problem involving an
+    *R*
+    -separable covariance
+-   `apply_lhs()` applies fast an
+    *R*
+    -separable covariance
 
-<img src="man/figures/README-pressure-1.png" width="100%" />
+To apply the separable-plus-banded model fast, see `to_book_format` and
+`BXfast`. TODO:
 
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+-   handle for a fast application of the separable-plus-banded model
+-   handle for best linear unbiased predictor (BLUP) using the
+    separable-plus-banded or
+    *R*
+    -separable model.

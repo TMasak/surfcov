@@ -45,7 +45,8 @@ iteration)
 }
 \description{
 Calculates the solution to the inverse problem involving the
-separable-plus-banded structure as the left-hand side.
+separable-plus-banded structure as the left-hand side, where the banded part
+is stationary.
 }
 \examples{
 K <- 30

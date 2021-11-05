@@ -27,7 +27,8 @@ defaults to \code{TRUE}}
 \item{mu}{matrix of size \code{K1} x \code{K2}, the mean, defaults to the
 empirical mean}
 
-\item{predict}{flag whether prediction-based cross-validation should be used}
+\item{predict}{flag whether prediction-based cross-validation should be used,
+the default is fit-based cross-validation}
 
 \item{maxd}{integer, maximum bandwidth considered by CV, defaults to
 \code{min(K1,K2)/10}}

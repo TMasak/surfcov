@@ -15,7 +15,8 @@
 #'          single starting point is used for every degree-of-separability.
 #' @param mu matrix of size \code{K1} x \code{K2}, the mean, defaults to the
 #'           empirical mean
-#' @param predict flag whether prediction-based cross-validation should be used
+#' @param predict flag whether prediction-based cross-validation should be used,
+#'                the default is fit-based cross-validation
 #' @param maxiter integer, maximum number of power iterations, defaults to 10
 #' @param maxR integer, maximum value of the degree-of-separability \code{R}
 #'             to be probed via CV (used only when \code{R} not provided

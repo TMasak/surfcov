@@ -1,7 +1,8 @@
 #' Alternating Direction Implicit Method for Separable-plus-banded Covariance
 #'
 #' Calculates the solution to the inverse problem involving the
-#' separable-plus-banded structure as the left-hand side.
+#' separable-plus-banded structure as the left-hand side, where the banded part
+#' is stationary.
 #'
 #' @param A1 temporal kernel of the separable-plus-banded model
 #' @param A2 spatial kernel of the separable-plus-banded model
