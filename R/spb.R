@@ -152,7 +152,7 @@ spb <- function(X, d=NULL, stationary=TRUE, mu=NULL, predict=FALSE,
     CV <- TRUE
     if(predict){ # prediction-based CV
       if(stationary){
-        if(length(maxd)==0) maxd <- max(2,floor(Kmin/10))
+        if(length(maxd)==0) maxd <- min(Kmin-1,max(2,floor(Kmin/10)))
         cvscores <- cvband_pred(X, Folds, maxd, mind, perc)
         names(cvscores) <- mind:maxd
         d <- min(localMaxima(-cvscores)) + mind - 1
@@ -162,13 +162,13 @@ spb <- function(X, d=NULL, stationary=TRUE, mu=NULL, predict=FALSE,
       }
     }else{ # fit-based CV
       if(stationary){
-        if(length(maxd)==0) maxd <- max(2,floor(Kmin/10))
+        if(length(maxd)==0) maxd <- min(Kmin-1,max(2,floor(Kmin/10)))
         cvscores <- cvband(X, Folds, maxd, mind)
         cvscores <- cvscores[1,]/cvscores[2,]
         names(cvscores) <- mind:maxd
         d <- min(localMaxima(cvscores)) + mind - 1
       }else{
-        if(length(maxd)==0) maxd <- 2
+        if(length(maxd)==0) maxd <- min(2,Kmin-1)
         cvscores <- cvband_nonstat(X, Folds, maxd, mind)
         cvscores <- cvscores[1,]/cvscores[2,]
         names(cvscores) <- mind:maxd
