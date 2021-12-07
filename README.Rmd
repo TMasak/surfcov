@@ -83,5 +83,5 @@ When one of the models is fitted, a list of functions that can be useful to the 
 
 To apply the separable-plus-banded model fast, see `to_book_format` and `BXfast`. TODO:
 
-* handle for a fast application of the separable-plus-banded model
-* handle for best linear unbiased predictor (BLUP) using the separable-plus-banded or \[R\]-separable model.
+* a handle for a fast application of the separable-plus-banded model
+* a handle for best linear unbiased predictor (BLUP) using the separable-plus-banded or \[R\]-separable model.
