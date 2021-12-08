@@ -6,9 +6,9 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The purpose of R package `surfcov` is to enable covariance estimation
-for random surfaces beyond separability, proposed in the papers
-[arXiv:1912.12870](https://arxiv.org/abs/1912.12870) and
+The purpose of the R package `surfcov` is to enable covariance
+estimation for random surfaces beyond separability, proposed in the
+papers [arXiv:1912.12870](https://arxiv.org/abs/1912.12870) and
 [arXiv:2007.12175](https://arxiv.org/abs/2007.12175).
 
 Let

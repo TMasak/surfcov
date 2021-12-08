@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The purpose of R package `surfcov` is to enable covariance estimation for random surfaces beyond separability, proposed in the papers [arXiv:1912.12870](https://arxiv.org/abs/1912.12870) and [arXiv:2007.12175](https://arxiv.org/abs/2007.12175).
+The purpose of the R package `surfcov` is to enable covariance estimation for random surfaces beyond separability, proposed in the papers [arXiv:1912.12870](https://arxiv.org/abs/1912.12870) and [arXiv:2007.12175](https://arxiv.org/abs/2007.12175).
 
 Let \[ X_1, \ldots, X_N \] be i.i.d. matrices of size \[ K_1 \times K_2 \] representing discrete measurements (on a grid) of some latent random surfaces on a 2D domain, and \[ C := cov(X_1) \] be the covariance operator. The covariance is a tensor of size \[ K_1 \times K_2 \times K_1 \times K_2 \], which becomes problematic to handle for \[K_1\] and \[K_2\] as small as 100. The assumption of separability postulates that
 
